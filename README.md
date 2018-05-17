@@ -16,3 +16,4 @@
 2. `cd sql`
 3. `mysql -u"yourAccount" -p"yourPassword" tinyworld < tinyworld.sql` 
 
+
