@@ -10,8 +10,9 @@
 
 
 
-#How to initialize the database?
+# How to initialize the database?
 
-1.`create a schema named tinyworld in your mysql.`
-2.`cd sql`
-3.`mysql -u"yourAccount" -p"yourPassword" tinyworld < tinyworld.sql` 
+1. `create a schema named tinyworld in your mysql.`
+2. `cd sql`
+3. `mysql -u"yourAccount" -p"yourPassword" tinyworld < tinyworld.sql` 
+
