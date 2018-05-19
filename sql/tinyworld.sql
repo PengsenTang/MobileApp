@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 80011
 File Encoding         : 65001
 
-Date: 2018-05-16 21:41:10
+Date: 2018-05-19 16:44:55
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -22,7 +22,8 @@ DROP TABLE IF EXISTS `authentication`;
 CREATE TABLE `authentication` (
   `user_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Unique identifier for a user',
   `password` varchar(18) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  PRIMARY KEY (`user_id`)
+  PRIMARY KEY (`user_id`),
+  CONSTRAINT `user_id` FOREIGN KEY (`user_id`) REFERENCES `user_info` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -49,16 +50,16 @@ CREATE TABLE `credit_ladder` (
 DROP TABLE IF EXISTS `message`;
 CREATE TABLE `message` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `from` int(11) NOT NULL,
-  `to` int(11) NOT NULL,
+  `sender` int(11) NOT NULL,
+  `receiver` int(11) NOT NULL,
   `content` varchar(20) NOT NULL,
   `time` datetime NOT NULL,
   `status` enum('已读','未读') NOT NULL DEFAULT '未读',
   PRIMARY KEY (`id`),
-  KEY `sender` (`from`),
-  KEY `receiver` (`to`),
-  CONSTRAINT `receiver` FOREIGN KEY (`to`) REFERENCES `authentication` (`user_id`),
-  CONSTRAINT `sender` FOREIGN KEY (`from`) REFERENCES `authentication` (`user_id`)
+  KEY `receiver` (`receiver`),
+  KEY `sender` (`sender`),
+  CONSTRAINT `receiver` FOREIGN KEY (`receiver`) REFERENCES `user_info` (`id`),
+  CONSTRAINT `sender` FOREIGN KEY (`sender`) REFERENCES `user_info` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -72,9 +73,12 @@ DROP TABLE IF EXISTS `relation`;
 CREATE TABLE `relation` (
   `id1` int(11) NOT NULL,
   `id2` int(11) NOT NULL,
-  `description` varchar(255) NOT NULL,
+  `description` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `time` datetime NOT NULL,
-  PRIMARY KEY (`id1`,`id2`)
+  PRIMARY KEY (`id1`,`id2`),
+  KEY `id2` (`id2`),
+  CONSTRAINT `relation_ibfk_1` FOREIGN KEY (`id1`) REFERENCES `user_info` (`id`),
+  CONSTRAINT `relation_ibfk_2` FOREIGN KEY (`id2`) REFERENCES `user_info` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -97,11 +101,10 @@ CREATE TABLE `user_info` (
   `address` varchar(50) DEFAULT '',
   `job` varchar(20) DEFAULT '',
   `signature` varchar(50) DEFAULT '',
-  `habit` varchar(30) DEFAULT '',
+  `habit` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT '',
   `profile_photo` varchar(50) DEFAULT '/profile_photo/default.bmp' COMMENT '存储的是头像路径，给出一个默认值',
   `credits` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  CONSTRAINT `userid` FOREIGN KEY (`id`) REFERENCES `authentication` (`user_id`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
