@@ -37,7 +37,7 @@ function queryArgs(sql, args, callback) {
 
 
 //return json back
-function responseDoReturn(res, result) {
+function doReturn(res, result) {
     console.log(result);
     if(typeof result === 'undefined') {
         res.json({
@@ -54,5 +54,5 @@ function responseDoReturn(res, result) {
 module.exports = {
     query: query,
     queryArgs: queryArgs,
-    doReturn: responseDoReturn
+    doReturn: doReturn
 }
