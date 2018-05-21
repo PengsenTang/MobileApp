@@ -38,16 +38,12 @@ function queryArgs(sql, args, callback) {
 
 
 //return json back
-function doReturn(res, result) {
-    console.log(result);
-    if(typeof result === 'undefined') {
-        res.json({
-            code:'201',
-            msg: 'failed to do'
-        });
+function doReturn(res, code, msg='success', result='') {
+    if(result === 'undefined'){
+        res.json({'code':'201', 'msg': 'failed to do'});
     }
-    else {
-        res.json(result);
+    else{
+        res.json({'code':code, 'msg':msg, 'result':result});
     }
 };
 
