@@ -1,7 +1,8 @@
-function getLimitation(json){
+function getLimitation(jsonStr){
+	var json = JSON.parse(jsonStr);
 	var result = "";
     for(var key in json){
-    	result += key.toString() + "=" + json[key].toString() + "AND";
+    	result += key + "=" + json[key] + "AND";
     }
     result = result.substring(0, result.length-3);
     return result;
