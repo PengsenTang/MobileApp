@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 80011
 File Encoding         : 65001
 
-Date: 2018-05-19 16:44:55
+Date: 2018-05-21 17:01:33
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -54,7 +54,8 @@ CREATE TABLE `message` (
   `receiver` int(11) NOT NULL,
   `content` varchar(20) NOT NULL,
   `time` datetime NOT NULL,
-  `status` enum('已读','未读') NOT NULL DEFAULT '未读',
+  `message_status` enum('deleted','unread','read') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 'unread',
+  `invitation_status` enum('pending','rejected','accepted') DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `receiver` (`receiver`),
   KEY `sender` (`sender`),
@@ -92,12 +93,12 @@ DROP TABLE IF EXISTS `user_info`;
 CREATE TABLE `user_info` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nickname` varchar(20) DEFAULT '',
-  `phone_number` varchar(16) DEFAULT '',
+  `phone_number` varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT '',
   `mail_address` varchar(35) DEFAULT '',
-  `name` varchar(20) NOT NULL,
-  `gender` enum('male','female') NOT NULL,
+  `name` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '',
+  `gender` enum('male','female') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 'male',
   `birthday` date DEFAULT NULL,
-  `register_time` date NOT NULL,
+  `register_time` date NOT NULL DEFAULT '2017-05-26',
   `address` varchar(50) DEFAULT '',
   `job` varchar(20) DEFAULT '',
   `signature` varchar(50) DEFAULT '',
