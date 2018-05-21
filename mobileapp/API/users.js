@@ -36,12 +36,12 @@ function email_authentication(req, res, next){
         						}
         					}
         					else{
-            					db.doReturn(res,{'code':'201','msg':'Not Registered Yet!','result':err.sqlMessage});
+            					db.doReturn(res,'201','Not Registered Yet!',err.sqlMessage);
             				}
         				});
         		}	
             	else{
-            		db.doReturn(res,{'code':'201','msg':'Not Registered Yet!','result':err.sqlMessage});
+            		db.doReturn(res,'201','Not Registered Yet!',err.sqlMessage);
             	}
         	}
     	);
@@ -82,12 +82,12 @@ function number_authentication(req, res, next){
         						}
         					}
         					else{
-            					db.doReturn(res,{'code':'201','msg':'Not Registered Yet!','result':err.sqlMessage});
+            					db.doReturn(res,'201','Not Registered Yet!',err.sqlMessage);
             				}
         				});
         		}	
             	else{
-            		db.doReturn(res,{'code':'201','msg':'Not Registered Yet!','result':err.sqlMessage});
+            		db.doReturn(res,'201','Not Registered Yet!',err.sqlMessage);
             	}
         	}
     	);
@@ -122,10 +122,10 @@ function number_register(req,res,next){
 					db.queryArgs(sqlCommands.users.create_authentication,authentication,
 						function(err,result){
 							if(result){
-								db.doReturn(res,{'code':'200','msg':'Registered Successfully'});
+								db.doReturn(res,'200','Registered Successfully');
 							}
 							else{
-								db.doReturn(res,{'code':'201','msg':'Register Failure','result':err.sqlMessage});
+								db.doReturn(res,'201','Register Failure',err.sqlMessage);
 							}
 						}
 					);
@@ -163,10 +163,10 @@ function email_register(req,res,next){
 					db.queryArgs(sqlCommands.users.create_authentication,authentication,
 						function(err,result){
 							if(result){
-								db.doReturn(res,{'code':'200','msg':'Registered Successfully'});
+								db.doReturn(res,'200','Registered Successfully');
 							}
 							else{
-								db.doReturn(res,{'code':'201','msg':'Register Failure','result':err.sqlMessage});
+								db.doReturn(res,'201','Register Failure',err.sqlMessage);
 							}
 						}
 					);
