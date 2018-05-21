@@ -12,7 +12,7 @@ var users = {
 	create_authentication:'insert into authentication values(?,?)',
 	email_register:'insert into user_info(mail_address,name,gender,register_time) values(?,?,?,?)',
 	getIdByNumber:'select * from user_info where phone_number = ?',
-	getIdByEmail:'select * from user_info where mail_address = ? ',
+	getIdByEmail:'select * from user_info where mail_address = ?',
 	check_authentication:'select password from authentication where user_id = ?',
 	whetherNumberRegistered:'select * from user_info where phone_number = ?',
 	whetherEmailRegistered:'select * from user_info where mail_address = ?'

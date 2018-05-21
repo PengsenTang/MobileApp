@@ -17,32 +17,31 @@ function email_authentication(req, res, next){
         	function(err, result) {
         		if(result){	
         			var user_id = result[0]['id'];
-        			console.log(Rpassword);
+        			console.log(user_id);
         			db.queryArgs(sqlCommands.users.check_authentication, user_id, 
         				function(err,result){
         					if(result){
         						if(result[0]['password']== Rpassword){
         							res.json({
-        								'code':'1',
-        								'user_id':result[0]['user_id'],
-        								'message':'Matched'
+        								'code':'200',
+        								'msg':'Matched',
+        								'result':user_id
         							})
         						}
         						else{
         							res.json({
-        								'code':'0',
-        								'message':'Not Matched',
-        								'detail':err.sqlMessage
+        								'code':'201',
+        								'msg':'Not Matched',
         							})
         						}
         					}
         					else{
-            					db.doReturn(res,{'code':'0','message':'Not Registered Yet!','detail':sqlMessage});
+            					db.doReturn(res,'201','Not Registered Yet!',err.sqlMessage);
             				}
         				});
         		}	
             	else{
-            		db.doReturn(res,{'code':'0','message':'Not Registered Yet!','detail':sqlMessage});
+            		db.doReturn(res,'201','Not Registered Yet!',err.sqlMessage);
             	}
         	}
     	);
@@ -70,26 +69,25 @@ function number_authentication(req, res, next){
         					if(result){
         						if(result[0]['password']== Rpassword){
         							res.json({
-        								'code':'1',
-        								'user_id':result[0]['user_id'],
-        								'message':'Matched'
+        								'code':'200',
+        								'msg':'Matched',
+        								'result':user_id
         							})
         						}
         						else{
         							res.json({
-        								'code':'0',
-        								'message':'Not Matched',
-        								'detail':err.sqlMessage
+        								'code':'201',
+        								'msg':'Not Matched',
         							})
         						}
         					}
         					else{
-            					db.doReturn(res,{'code':'0','message':'Not Registered Yet!','detail':err.sqlMessage});
+            					db.doReturn(res,'201','Not Registered Yet!',err.sqlMessage);
             				}
         				});
         		}	
             	else{
-            		db.doReturn(res,{'code':'0','message':'Not Registered Yet!','detail':err.sqlMessage});
+            		db.doReturn(res,'201','Not Registered Yet!',err.sqlMessage);
             	}
         	}
     	);
@@ -124,16 +122,16 @@ function number_register(req,res,next){
 					db.queryArgs(sqlCommands.users.create_authentication,authentication,
 						function(err,result){
 							if(result){
-								db.doReturn(res,{'code':'1','message':'Registered Successfully'});
+								db.doReturn(res,'200','Registered Successfully');
 							}
 							else{
-								db.doReturn(res,{'result':'0','message':'Register Failure','detail':err.sqlMessage});
+								db.doReturn(res,'201','Register Failure',err.sqlMessage);
 							}
 						}
 					);
 				}
 				else{
-					res.json({'code':'0','message':'Already Registered','detail':err.sqlMessage});
+					res.json({'code':'201','msg':'Already Registered','result':err.sqlMessage});
 				}
 			}
 		);
@@ -165,16 +163,16 @@ function email_register(req,res,next){
 					db.queryArgs(sqlCommands.users.create_authentication,authentication,
 						function(err,result){
 							if(result){
-								db.doReturn(res,{'code':'1','message':'Registered Successfully'});
+								db.doReturn(res,'200','Registered Successfully');
 							}
 							else{
-								db.doReturn(res,{'code':'0','message':'Register Failure','detail':err.sqlMessage});
+								db.doReturn(res,'201','Register Failure',err.sqlMessage);
 							}
 						}
 					);
 				}
 				else{
-					res.json({'code':'0','message':'Already Registered','detail':err.sqlMessage});
+					res.json({'code':'201','msg':'Already Registered','result':err.sqlMessage});
 				}
 			}
 		);
