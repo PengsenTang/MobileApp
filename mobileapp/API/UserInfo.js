@@ -89,7 +89,7 @@ function update_userinfos(req, res, next){
     }
     else{
         var attributes = myJson.getUpdateString(params.Attributes);//string to object
-        console.log(attributes);
+        //console.log(attributes);
         sql = "update user_info set " + attributes + " where id = ?";
         console.log(sql);
         db.queryArgs(sql, params.id, function(err, result) {
