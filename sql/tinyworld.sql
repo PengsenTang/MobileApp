@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 80011
 File Encoding         : 65001
 
-Date: 2018-05-21 17:01:33
+Date: 2018-05-21 18:25:48
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -105,7 +105,9 @@ CREATE TABLE `user_info` (
   `habit` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT '',
   `profile_photo` varchar(50) DEFAULT '/profile_photo/default.bmp' COMMENT '存储的是头像路径，给出一个默认值',
   `credits` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uniquenumber` (`phone_number`),
+  UNIQUE KEY `uniqueemail` (`mail_address`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
