@@ -28,6 +28,7 @@ function queryArgs(sql, args, callback) {
         else{
             connection.query(sql, args,function (err, rows) {
                 callback(err, rows);
+                console.log(rows);
                 connection.release();
             });
         }
@@ -51,8 +52,14 @@ function doReturn(res, result) {
 };
 
 
+function dbFormat(sql, params){
+    return mysql.format(sql, params);
+}
+
+
 module.exports = {
     query: query,
     queryArgs: queryArgs,
-    doReturn: doReturn
+    doReturn: doReturn,
+    dbFormat: dbFormat
 }
