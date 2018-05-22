@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var Users = require('../API/users');
+var Users = require('../API/Users');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -20,7 +20,7 @@ var method = req.body.method;
 	else
 	{
 		res.json({
-            code:'202',
+            code:202,
             msg: 'Wrong Register Type'
         });
 	}
@@ -39,7 +39,7 @@ router.post('/register',function(req,res,next){
 	else
 	{
 		res.json({
-            code:'202',
+            code:202,
             msg: 'Wrong Register Type'
         });
 	}

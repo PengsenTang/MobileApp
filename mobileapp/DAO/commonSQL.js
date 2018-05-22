@@ -22,7 +22,10 @@ pengsen tang
 **/
 
 //write here
-
+var relationship = {
+	get_relationship:'select * from relation where id1 = ? or id2 = ?',
+	new_relationship:'insert into relation values(?,?,?,?)'
+}
 /**
 pengsen tang
 **/
@@ -54,5 +57,6 @@ module.exports = {
     userinfo : userinfo,
     users: users,
     message: message,
-    invitation: invitation
+    invitation: invitation,
+    relationship:relationship
 };
