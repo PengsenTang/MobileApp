@@ -3,9 +3,9 @@ var sqlCommands = require('../DAO/commonSQL');
 
 
 function send(req, res){
-	if(!req.body.sender|| !req.body.receiver || !req.body.content){
+	if(!req.body.sender || !req.body.receiver || !req.body.content){
         res.json({
-            'code':'201',
+            'code':201,
             'msg': 'parameter error'
         });
         return;
@@ -13,7 +13,7 @@ function send(req, res){
     var msg = req.body;
     if(msg.sender == msg.receiver){
     	res.json({
-            'code':'201',
+            'code': 201,
             'msg': 'you can not send message to yourself'
         });
         return;
@@ -31,7 +31,7 @@ function send(req, res){
 function receive_list(req, res){
 	if(!req.body.id){
 		res.json({
-            'code':'201',
+            'code': 201,
             'msg': 'parameter error'
         });
         return;
@@ -45,7 +45,7 @@ function receive_list(req, res){
 function message_info(req, res){
 	if(!req.body.id){
 		res.json({
-            'code':'201',
+            'code': 201,
             'msg': 'parameter error'
         });
         return;
@@ -59,7 +59,7 @@ function message_info(req, res){
 function update_message_status(req, res){
 	if(!req.body.id || !req.body.message_status){
 		res.json({
-            'code':'201',
+            'code': 201,
             'msg': 'parameter error'
         });
         return;
@@ -67,7 +67,7 @@ function update_message_status(req, res){
     var msg = req.body;
     if(msg.message_status!='read'&& msg.message_status!='unread'&& msg.message_status!='deleted'){
     	res.json({
-            'code':'201',
+            'code': 201,
             'msg': 'message_status must be one of (read/unread/deleted)'
         });
         return;
