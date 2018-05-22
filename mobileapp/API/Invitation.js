@@ -1,5 +1,7 @@
 var db = require('../DAO/Connection');
 var sqlCommands = require('../DAO/commonSQL');
+var Msg = require('./Message');
+var Relationship = require('./Relationship');
 
 
 function send(req, res){
@@ -28,6 +30,15 @@ function send(req, res){
 }
 
 
+function agree_invitation(id, res){
+    Msg.get_message_info(res, id, function(req, res){
+            var params = [req.sender, req.receiver];
+            Relationship.newRelationship({'body':params}, res);
+        }
+    );
+}
+
+
 function update_invitation_status(req, res){
 	if(!req.body.id || !req.body.invitation_status){
 		res.json({
@@ -44,6 +55,11 @@ function update_invitation_status(req, res){
         });
         return;
     }
+    //agree invitation, insert data into relationship table
+    if(msg.invitation_status == 'accepted'){
+        agree_invitation(msg.id, res);
+    }
+    //continue to update
     var params = [msg.invitation_status, msg.id];
     db.queryArgs(sqlCommands.invitation.update_invitation_status, params, function(err, result) {
     	if(!result || result.affectedRows == 0)
