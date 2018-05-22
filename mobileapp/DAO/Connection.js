@@ -26,11 +26,13 @@ function queryArgs(sql, args, callback) {
             console.log(err);
         }
         else{
-            connection.query(sql, args,function (err, rows) {
+            var query=connection.query(sql, args,function (err, rows) {
+                console.log(query.sql);
                 callback(err, rows);
                 console.log(rows);
                 connection.release();
             });
+            
         }
         
     });
@@ -38,8 +40,8 @@ function queryArgs(sql, args, callback) {
 
 
 //return json back
-function doReturn(res, code, msg='success', result='') {
-    if(result === 'undefined'){
+function doReturn(res, code, msg='success', result='null') {
+    if(!result){
         res.json({'code':'201', 'msg': 'failed to do'});
     }
     else{

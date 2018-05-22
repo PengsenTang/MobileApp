@@ -5,7 +5,7 @@ var myJson = require('./jsonParser');
 
 //
 function get_userinfo_all(req, res, next){
-    if(req.body.id == 'undefined'){
+    if(!req.body.id){
         res.json({
             'code':'201',
             'msg': 'parameter error'
@@ -25,7 +25,7 @@ function get_userinfo_all(req, res, next){
 function get_userinfo(req, res, next){
     var params = req.body;
     //if not find id or attributes, return error
-    if(params.id == 'undefined' || params.Attributes == 'undefined'){
+    if(!params.id || !params.Attributes){
         res.json({
             'code':'201',
             'msg': 'parameter error'
@@ -48,7 +48,7 @@ function get_userinfo(req, res, next){
 function update_userinfo(req, res, next){
     var params = req.body;
     //if not find id or attributes, return error
-    if(params.id == 'undefined' || params.Attributes == 'undefined'){
+    if(!params.id || !params.Attributes){
         res.json({
             code:'201',
             msg: 'parameter error'
@@ -81,7 +81,7 @@ function update_userinfo(req, res, next){
 function update_userinfos(req, res, next){
     var params = req.body;
     //if not find id or attributes, return error
-    if(params.id == 'undefined' || params.Attributes == 'undefined'){
+    if(!params.id || !params.Attributes){
         res.json({
             code:'201',
             msg: 'parameter error'

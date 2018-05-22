@@ -32,6 +32,18 @@ yuhang meng
 **/
 
 //write here
+var message = {
+	send: 'insert into message(sender, receiver, content, time) values(?,?,?,now())',
+	receive_list: 'select * from message where receiver=?',
+	message_info: 'select * from message where id=?',
+	update_message_status: 'update message set message_status=? where id=?'
+}
+
+
+var invitation = {
+	send: "insert into message(sender, receiver, content, time, message_status, invitation_status) values(?,?,?,now(),'unread','pending')",
+	update_invitation_status: 'update message set invitation_status=? where id=?'
+}
 
 /**
 yuhang meng
@@ -40,5 +52,7 @@ yuhang meng
 //exports
 module.exports = {
     userinfo : userinfo,
-    users:users
+    users: users,
+    message: message,
+    invitation: invitation
 };
