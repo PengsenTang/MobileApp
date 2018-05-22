@@ -21,7 +21,7 @@ function getUpdateList(jsonStr){
     	result.push(key);
     	result.push(json[key]);
     }
-    return result;
+    return result; 
 }
 
 
