@@ -24,7 +24,8 @@ pengsen tang
 //write here
 var relationship = {
 	get_relationship:'select * from relation where id1 = ? or id2 = ?',
-	new_relationship:'insert into relation values(?,?,?,?)'
+	new_relationship:'insert into relation values(?,?,?,?)',
+	check_relationship:'select count(*) from relation where (id1 = ? and id2 = ?)  or (id1 = ? and id2 = ?) '
 }
 /**
 pengsen tang
