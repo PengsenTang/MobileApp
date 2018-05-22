@@ -5,7 +5,7 @@ var sqlCommands = require('../DAO/commonSQL');
 function send(req, res){
 	if(!req.body.sender|| !req.body.receiver || !req.body.content){
         res.json({
-            'code':'201',
+            'code': 201,
             'msg': 'parameter error'
         });
         return;
@@ -13,7 +13,7 @@ function send(req, res){
     var msg = req.body;
     if(msg.sender == msg.receiver){
     	res.json({
-            'code':'201',
+            'code': 201,
             'msg': 'you can not invite yourself'
         });
         return;
@@ -31,7 +31,7 @@ function send(req, res){
 function update_invitation_status(req, res){
 	if(!req.body.id || !req.body.invitation_status){
 		res.json({
-            'code':'201',
+            'code': 201,
             'msg': 'parameter error'
         });
         return;
@@ -39,7 +39,7 @@ function update_invitation_status(req, res){
     var msg = req.body;
     if(msg.invitation_status!='pending' && msg.invitation_status!='accepted' && msg.invitation_status!='rejected'){
     	res.json({
-            'code':'201',
+            'code': 201,
             'msg': 'invitation_status must be one of (pending/rejected/accepted)'
         });
         return;

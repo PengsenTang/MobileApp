@@ -42,7 +42,7 @@ function queryArgs(sql, args, callback) {
 //return json back
 function doReturn(res, code, msg='success', result='null') {
     if(!result){
-        res.json({'code':'201', 'msg': 'failed to do'});
+        res.json({'code':201, 'msg': 'failed to do'});
     }
     else{
         res.json({'code':code, 'msg':msg, 'result':result});
