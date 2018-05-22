@@ -64,7 +64,7 @@ function get_message_info(res, msg_id, callback){
 		if(!result || result.affectedRows == 0)
     		db.doReturn(res, 201, 'query failed');
     	else{
-    		var params = {'id':msg_id, 'sender':result.sender, 'receiver':result.receiver};
+    		var params = {'id':msg_id, 'sender':result[0].sender, 'receiver':result[0].receiver};
     		callback(params, res);
     	}
     });

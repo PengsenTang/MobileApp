@@ -32,7 +32,9 @@ function send(req, res){
 
 function agree_invitation(id, res){
     Msg.get_message_info(res, id, function(req, res){
-            var params = [req.sender, req.receiver];
+            console.log(req);
+            var params = {'id1':req.sender, 'id2':req.receiver};
+            console.log('1111:'+params);
             Relationship.newRelationship({'body':params}, res);
         }
     );
