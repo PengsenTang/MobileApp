@@ -5,9 +5,9 @@ var sqlCommands = require('../DAO/commonSQL');
 function email_authentication(req, res, next){
     var params = req.body;
     console.log(params);
-    if(params.account == 'undefined' || params.Attributes == 'undefined'){
+    if( !params.account  || !params.Attributes){
         res.json({
-            code:'201',
+            code:201,
             msg: 'parameter error'
         });
     }
@@ -23,25 +23,25 @@ function email_authentication(req, res, next){
         					if(result){
         						if(result[0]['password']== Rpassword){
         							res.json({
-        								'code':'200',
+        								'code':200,
         								'msg':'Matched',
         								'result':user_id
         							})
         						}
         						else{
         							res.json({
-        								'code':'201',
+        								'code':201,
         								'msg':'Not Matched',
         							})
         						}
         					}
         					else{
-            					db.doReturn(res,'201','Not Registered Yet!',err.sqlMessage);
+            					db.doReturn(res,201,'Not Registered Yet!',err.sqlMessage);
             				}
         				});
         		}	
             	else{
-            		db.doReturn(res,'201','Not Registered Yet!',err.sqlMessage);
+            		db.doReturn(res,201,'Not Registered Yet!',err.sqlMessage);
             	}
         	}
     	);
@@ -51,9 +51,9 @@ function email_authentication(req, res, next){
 function number_authentication(req, res, next){
     var params = req.body;
     console.log(params);
-    if(params.account == 'undefined' || params.Attributes == 'undefined'){
+    if(!params.account || !params.Attributes){
         res.json({
-            code:'201',
+            code:201,
             msg: 'parameter error'
         });
     }
@@ -69,25 +69,25 @@ function number_authentication(req, res, next){
         					if(result){
         						if(result[0]['password']== Rpassword){
         							res.json({
-        								'code':'200',
+        								'code':200,
         								'msg':'Matched',
         								'result':user_id
         							})
         						}
         						else{
         							res.json({
-        								'code':'201',
+        								'code':201,
         								'msg':'Not Matched',
         							})
         						}
         					}
         					else{
-            					db.doReturn(res,'201','Not Registered Yet!',err.sqlMessage);
+            					db.doReturn(res,201,'Not Registered Yet!',err.sqlMessage);
             				}
         				});
         		}	
             	else{
-            		db.doReturn(res,'201','Not Registered Yet!',err.sqlMessage);
+            		db.doReturn(res,201,'Not Registered Yet!',err.sqlMessage);
             	}
         	}
     	);
@@ -97,9 +97,9 @@ function number_authentication(req, res, next){
 function number_register(req,res,next){
     //if not find id or attributes, return error
     var params = req.body;
-    if(params.id == 'undefined' || params.Attributes == 'undefined'){
+    if(!params.id || !params.Attributes ){
         res.json({
-            code:'201',
+            code:201,
             msg: 'parameter error'
         });
     }
@@ -122,16 +122,16 @@ function number_register(req,res,next){
 					db.queryArgs(sqlCommands.users.create_authentication,authentication,
 						function(err,result){
 							if(result){
-								db.doReturn(res,'200','Registered Successfully');
+								db.doReturn(res,200,'Registered Successfully');
 							}
 							else{
-								db.doReturn(res,'201','Register Failure',err.sqlMessage);
+								db.doReturn(res,201,'Register Failure',err.sqlMessage);
 							}
 						}
 					);
 				}
 				else{
-					res.json({'code':'201','msg':'Already Registered','result':err.sqlMessage});
+					res.json({'code':201,'msg':'Already Registered','result':err.sqlMessage});
 				}
 			}
 		);
@@ -140,9 +140,9 @@ function number_register(req,res,next){
 
 function email_register(req,res,next){
     var params = req.body;
-    if(params.id == 'undefined' || params.Attributes == 'undefined'){
+    if(!params.id  || !params.Attributes){
         res.json({
-            code:'201',
+            code:201,
             msg: 'parameter error'
         });
     }
@@ -163,16 +163,16 @@ function email_register(req,res,next){
 					db.queryArgs(sqlCommands.users.create_authentication,authentication,
 						function(err,result){
 							if(result){
-								db.doReturn(res,'200','Registered Successfully');
+								db.doReturn(res,200,'Registered Successfully');
 							}
 							else{
-								db.doReturn(res,'201','Register Failure',err.sqlMessage);
+								db.doReturn(res,201,'Register Failure',err.sqlMessage);
 							}
 						}
 					);
 				}
 				else{
-					res.json({'code':'201','msg':'Already Registered','result':err.sqlMessage});
+					res.json({'code':201,'msg':'Already Registered','result':err.sqlMessage});
 				}
 			}
 		);
