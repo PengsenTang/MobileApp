@@ -51,7 +51,22 @@ function message_info(req, res){
         return;
     }
     db.queryArgs(sqlCommands.message.message_info, req.body.id, function(err, result) {
-    	db.doReturn(res, 200, 'success', result[0]);
+    	if(!result || result.affectedRows == 0)
+    		db.doReturn(res, 201, 'query failed');
+    	else
+    		db.doReturn(res, 200, 'success', result[0]);
+    });
+}
+
+
+function get_message_info(res, msg_id, callback){
+	db.queryArgs(sqlCommands.message.message_info, msg_id, function(err, result) {
+		if(!result || result.affectedRows == 0)
+    		db.doReturn(res, 201, 'query failed');
+    	else{
+    		var params = {'id':msg_id, 'sender':result[0].sender, 'receiver':result[0].receiver};
+    		callback(params, res);
+    	}
     });
 }
 
@@ -86,5 +101,6 @@ module.exports = {
 	send: send,
 	receive_list: receive_list,
 	message_info: message_info,
-    update_message_status: update_message_status
+    update_message_status: update_message_status,
+    get_message_info: get_message_info
 };
