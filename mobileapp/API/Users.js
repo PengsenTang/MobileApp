@@ -3,15 +3,14 @@ var sqlCommands = require('../DAO/commonSQL');
 
 
 function email_authentication(req, res, next){
-    var params = req.body;
-    console.log(params);
-    if( !params.account  || !params.Attributes){
+    if( !req.body.account  || !req.body.password || !req.body.method){
         res.json({
             code:201,
             msg: 'parameter error'
         });
     }
     else{
+        var params = req.body;
     	var Rpassword = params.password;
     	db.queryArgs(sqlCommands.users.getIdByEmail, params.account, 
         	function(err, result) {
@@ -49,15 +48,14 @@ function email_authentication(req, res, next){
 }
 
 function number_authentication(req, res, next){
-    var params = req.body;
-    console.log(params);
-    if(!params.account || !params.Attributes){
+    if(!req.body.account || !req.body.password || !req.body.method){
         res.json({
             code:201,
             msg: 'parameter error'
         });
     }
     else{
+        var params = req.body;
     	var Rpassword = params.password;
     	db.queryArgs(sqlCommands.users.getIdByNumber, params.account, 
         	function(err, result) {
@@ -96,14 +94,14 @@ function number_authentication(req, res, next){
 
 function number_register(req,res,next){
     //if not find id or attributes, return error
-    var params = req.body;
-    if(!params.id || !params.Attributes ){
+    if(!req.body.account || !req.body.method || !req.body.password ){
         res.json({
             code:201,
             msg: 'parameter error'
         });
     }
     else{
+        var params = req.body;
     	var param = [];
 		param.push(params.account);
 		param.push(params.name);
@@ -139,15 +137,16 @@ function number_register(req,res,next){
 }
 
 function email_register(req,res,next){
-    var params = req.body;
-    if(!params.id  || !params.Attributes){
+    
+    if(!req.body.method  || !req.body.account || !req.body.password){
         res.json({
             code:201,
             msg: 'parameter error'
         });
     }
     else{
-		var param = [];
+	    var params = req.body;
+    	var param = [];
 		param.push(params.account);
 		param.push(params.name);
 		param.push(params.gender);
