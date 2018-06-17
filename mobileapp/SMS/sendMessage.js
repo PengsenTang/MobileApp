@@ -30,7 +30,28 @@ function messageVerify(phoneNumber,verifyCode){
     })
 }
 
+function forgetPassword(phoneNumber,verifyCode){
+    smsClient.sendSMS({
+        PhoneNumbers: phoneNumber,
+        SignName: '小世界',
+        TemplateCode: 'SMS_137665739',
+        TemplateParam: JSON.stringify({
+            "code":verifyCode
+        })
+    }).then(function (res) {
+        let {Code}=res
+        if (Code === 'OK') {
+            //处理返回参数
+            console.log(res)
+        }
+    }, function (err) {
+        console.log(err)
+    })
+}
+
+
 // messageVerify('15082362189',"666999")
 module.exports={
-    messageVerify:messageVerify
+    messageVerify:messageVerify,
+    forgetPassword:forgetPassword
 }
