@@ -31,8 +31,8 @@ router.all('/getVerifycode',function(req,res,next){
 	Verify.sendMessage(phoneNumber)
 })
 
-route.post('/forgetPassword',function(req,res,next){
-		car phoneNumber = req.body.account
+router.post('/forgetPassword',function(req,res,next){
+		var phoneNumber = req.body.account
 		Verify.forgetPassword(phoneNumber)
 })
 
