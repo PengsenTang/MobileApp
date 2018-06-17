@@ -35,7 +35,7 @@ router.post('/resetPassword',function(req,res,next){
     Users.reset_password(req,res,next)
 })
 
-router.post('/modifyPassword',function(req,res,nexy){
+router.post('/modifyPassword',function(req,res,next){
 	Users.modify_password(req,res,next)
 })
 
