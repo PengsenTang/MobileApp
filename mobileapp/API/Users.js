@@ -2,6 +2,8 @@ var db = require('../DAO/Connection');
 var sqlCommands = require('../DAO/commonSQL');
 var Verify = require('../SMS/control');
 var redis = require('redis')
+const crypto = require('crypto')
+
 client = redis.createClient()
 
 function email_authentication(req, res, next){
@@ -49,6 +51,7 @@ function email_authentication(req, res, next){
 }
 
 function number_authentication(req, res, next){
+	var md5 = crypto.createHash("md5")
     if(!req.body.account || !req.body.password || !req.body.method){
         res.json({
             code:201,
@@ -58,7 +61,8 @@ function number_authentication(req, res, next){
     else{
         var params = req.body;
     	var Rpassword = params.password;
-    	db.queryArgs(sqlCommands.users.getIdByNumber, params.account, 
+    	Rpassword = md5.update(Rpassword).digest('hex')
+	db.queryArgs(sqlCommands.users.getIdByNumber, params.account, 
         	function(err, result) {
         		if(result){	
         			var user_id = result[0]['id'];
@@ -94,6 +98,7 @@ function number_authentication(req, res, next){
 
 function number_register(req,res,next){
     //if not find id or attributes, return error
+var md5 = crypto.createHash("md5")
     if(!req.body.account || !req.body.method || !req.body.password || !req.body.verifycode){
         res.json({
             code:201,
@@ -124,7 +129,9 @@ function number_register(req,res,next){
                                     var insertId = result.insertId;
                                     var authentication = [];
                                     authentication.push(insertId);
-                                    authentication.push(req.body.password);
+				    var password = req.body.password
+				    var encryptedPassword = md5.update(password).digest("hex");
+                                    authentication.push(encryptedPassword);
                                     db.queryArgs(sqlCommands.users.create_authentication,authentication,
                                         function(err,result){
                                             if(result){
