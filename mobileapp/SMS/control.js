@@ -11,6 +11,7 @@ function generateCode(){
 }
 
 
+
 function sendMessage(phoneNumber){
     var verifyCode = generateCode()
     client.set(phoneNumber,verifyCode,function(err,reply){
@@ -18,6 +19,15 @@ function sendMessage(phoneNumber){
 	console.log(reply.toString());
     })
     messageFunc.messageVerify(phoneNumber,verifyCode)
+}
+
+function forgetPassword(phoneNumber){
+    var verifyCode = generateCode()
+    client.set(phoneNumber,verifyCode,function(err,reply){
+	client.expire(phoneNumber,600)
+	console.log(reply.toString());
+    })
+    messageFunc.forgetPassword(phoneNumber,verifyCode)
 }
 
 function checkVerifycode(phoneNumber,code){
@@ -43,6 +53,7 @@ checkVerifycode(15082362189,2130)
 
 module.exports={
 	sendMessage:sendMessage,
-	checkVerifycode:checkVerifycode
+	checkVerifycode:checkVerifycode,
+	forgetPassword:forgetPassword
 }
 //sendMessage(15082362189,code)

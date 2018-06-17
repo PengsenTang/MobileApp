@@ -157,6 +157,104 @@ var md5 = crypto.createHash("md5")
 	}
 }
 
+function modify_password(req,res,next){
+    var md5 = crypto.createHash("md5")
+    if(!req.body.id || !req.body.method || !req.body.oldpassword || !req.body.newpassword){
+        res.json({
+            code:201,
+            msg: 'parameter error'
+        });
+    }
+    else{
+        var params = req.body
+        var oldPassword = req.body.oldpassword
+        var encryptedOldPassword = md5.update(oldPassword).digest("hex")
+        db.queryArgs(sqlCommands.users.check_authentication, user_id, 
+            function(err,result){
+                if(result){
+                    if(result[0]['password']== encryptedOldPassword){
+                                    var insertId = req.body.id;
+                                    var authentication = [];
+                                    var newPassword = req.body.newpassword
+                                    var encryptedNewPassword = md5.update(newPassword).digest("hex");
+                                    authentication.push(encryptedNewPassword);
+                                    authentication.push(insertId);
+                                    db.queryArgs(sqlCommands.users.update_password,authentication,
+                                        function(err,result){
+                                            if(result){
+                                                db.doReturn(res,200,'Updated Successfully');
+                                            }
+                                            else{
+                                                db.doReturn(res,201,'Update Failure',err.sqlMessage);
+                                            }
+                                        });
+                                }
+                                else{
+                                    res.json({
+                                        'code':201,
+                                        'msg':'Not Matched',
+                                    })
+                                }
+                            }
+                            else{
+                                db.doReturn(res,201,'Not Registered Yet!',err.sqlMessage);
+                            }
+                        });
+    }
+}
+
+function reset_password(req,res,next){
+    var md5 = crypto.createHash("md5")
+    if(!req.body.account || !req.body.method || !req.body.password || !req.body.verifycode){
+        res.json({
+            code:201,
+            msg: 'parameter error'
+        });
+    }
+    else{
+    var params = req.body
+    var code = params.verifycode
+    client.get(phoneNumber,function(err,response){
+        if(err){
+            console.log("Something wrong with redis")
+            return 0
+        }
+        else{
+            if(code == response){
+                        var params = req.body;
+                        var param = [];
+                        var account = params.account
+                        db.queryArgs(sqlCommands.users.getIdByNumber,account,
+                            function(err,result){
+                                if(result){
+                                    var insertId = result[0]['id'];
+                                    var authentication = [];
+                                    var password = req.body.password
+                                    var encryptedPassword = md5.update(password).digest("hex");
+                                    authentication.push(encryptedPassword);
+                                    authentication.push(insertId);
+                                    db.queryArgs(sqlCommands.users.update_password,authentication,
+                                        function(err,result){
+                                            if(result){
+                                                db.doReturn(res,200,'Updated Successfully');
+                                            }
+                                            else{
+                                                db.doReturn(res,201,'Update Failure',err.sqlMessage);
+                                            }
+                                        });
+                                }
+                                 else{
+                                    res.json({'code':201,'msg':'Not Registered Yet','result':err.sqlMessage});
+                                }
+                            });
+            }
+            else{
+                res.json({'code':201,'msg':'Verifycode Not Matched'});
+            }
+        }
+    })
+}
+}
 
 function email_register(req,res,next){
     

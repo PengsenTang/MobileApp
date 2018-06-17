@@ -25,13 +25,21 @@ var method = req.body.method;
         });
 	}
 })
-router.all('/getVerifycode',function(req,res,next){
+router.post('/registerVerifycode',function(req,res,next){
         var phoneNumber = req.body.account
 	console.log(phoneNumber)
 	Verify.sendMessage(phoneNumber)
 })
 
-router.post('/forgetPassword',function(req,res,next){
+router.post('/resetPassword',function(req,res,next){
+    Users.reset_password(req,res,next)
+})
+
+router.post('/modifyPassword',function(req,res,nexy){
+	Users.modify_password(req,res,next)
+})
+
+router.post('/resetVerifycode',function(req,res,next){
 		var phoneNumber = req.body.account
 		Verify.forgetPassword(phoneNumber)
 })
