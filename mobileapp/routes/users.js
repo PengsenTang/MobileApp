@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var Users = require('../API/Users');
-
+var Verify = require('../SMS/control');
 /* GET users listing. */
 router.get('/', function(req, res, next) {
     res.send('respond with a resource');
@@ -25,6 +25,12 @@ var method = req.body.method;
         });
 	}
 })
+router.all('/getVerifycode',function(req,res,next){
+        var phoneNumber = req.body.account
+	console.log(phoneNumber)
+	Verify.sendMessage(phoneNumber)
+})
+
 
 router.post('/register',function(req,res,next){
 	var method = req.body.method;
