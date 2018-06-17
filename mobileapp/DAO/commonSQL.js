@@ -16,7 +16,7 @@ var users = {
 	check_authentication:'select password from authentication where user_id = ?',
 	whetherNumberRegistered:'select * from user_info where phone_number = ?',
 	whetherEmailRegistered:'select * from user_info where mail_address = ?',
-	updatePassword:'update authentication set password = ? where id = ?'
+	update_password:'update authentication set password =? where user_id =?'
 }
 /**
 pengsen tang
