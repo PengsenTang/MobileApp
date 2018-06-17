@@ -7,7 +7,7 @@ const crypto = require('crypto')
 client = redis.createClient()
 
 function email_authentication(req, res, next){
-    if( !req.body.account  || !req.body.password || !req.body.method){
+    if( !req.body.account  || !req.body.password){
         res.json({
             code:201,
             msg: 'parameter error'
@@ -159,7 +159,8 @@ var md5 = crypto.createHash("md5")
 
 function modify_password(req,res,next){
     var md5 = crypto.createHash("md5")
-    if(!req.body.id || !req.body.method || !req.body.oldpassword || !req.body.newpassword){
+    var _md5 = crypto.createHash("md5")
+    if(!req.body.id || !req.body.oldpassword || !req.body.newpassword){
         res.json({
             code:201,
             msg: 'parameter error'
@@ -168,6 +169,7 @@ function modify_password(req,res,next){
     else{
         var params = req.body
         var oldPassword = req.body.oldpassword
+	var user_id = req.body.id
         var encryptedOldPassword = md5.update(oldPassword).digest("hex")
         db.queryArgs(sqlCommands.users.check_authentication, user_id, 
             function(err,result){
@@ -176,10 +178,10 @@ function modify_password(req,res,next){
                                     var insertId = req.body.id;
                                     var authentication = [];
                                     var newPassword = req.body.newpassword
-                                    var encryptedNewPassword = md5.update(newPassword).digest("hex");
+                                    var encryptedNewPassword = _md5.update(newPassword).digest("hex");
                                     authentication.push(encryptedNewPassword);
                                     authentication.push(insertId);
-                                    db.queryArgs(sqlCommands.users.update_password,authentication,
+                                    db.queryArgs(sqlCommands.users.updatePassword,authentication,
                                         function(err,result){
                                             if(result){
                                                 db.doReturn(res,200,'Updated Successfully');
@@ -205,16 +207,19 @@ function modify_password(req,res,next){
 
 function reset_password(req,res,next){
     var md5 = crypto.createHash("md5")
-    if(!req.body.account || !req.body.method || !req.body.password || !req.body.verifycode){
+    console.log(req.body)
+    if(!req.body.account || !req.body.password || !req.body.verifycode){
         res.json({
             code:201,
             msg: 'parameter error'
         });
     }
     else{
+    console.log("in else")
     var params = req.body
     var code = params.verifycode
-    client.get(phoneNumber,function(err,response){
+    var phoneNumber = params.account
+	client.get(phoneNumber,function(err,response){
         if(err){
             console.log("Something wrong with redis")
             return 0
@@ -233,8 +238,10 @@ function reset_password(req,res,next){
                                     var encryptedPassword = md5.update(password).digest("hex");
                                     authentication.push(encryptedPassword);
                                     authentication.push(insertId);
-                                    db.queryArgs(sqlCommands.users.update_password,authentication,
-                                        function(err,result){
+                                    console.log(authentication)
+				    authentication2 = ['153','53']
+				    console.log(sqlCommands.users.updatePassword)
+				    db.queryArgs(sqlCommands.users.updatePassword,authentication,function(err,result){
                                             if(result){
                                                 db.doReturn(res,200,'Updated Successfully');
                                             }
@@ -258,7 +265,7 @@ function reset_password(req,res,next){
 
 function email_register(req,res,next){
     
-    if(!req.body.method  || !req.body.account || !req.body.password){
+    if( !req.body.account || !req.body.password){
         res.json({
             code:201,
             msg: 'parameter error'
@@ -302,4 +309,6 @@ module.exports = {
     email_register:email_register,
     number_authentication:number_authentication,
     email_authentication:email_authentication,
+    reset_password:reset_password,
+    modify_password:modify_password
 };
