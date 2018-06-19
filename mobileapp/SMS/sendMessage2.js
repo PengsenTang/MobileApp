@@ -11,7 +11,7 @@ let smsClient = new SMSClient({accessKeyId, secretAccessKey})
 //发送短信
 
 
-function messageVerify(phoneNumber,verifyCode,res){
+function messageVerify(phoneNumber,verifyCode){
     smsClient.sendSMS({
         PhoneNumbers: phoneNumber,
         SignName: '小世界',
@@ -19,28 +19,18 @@ function messageVerify(phoneNumber,verifyCode,res){
         TemplateParam: JSON.stringify({
             "code":verifyCode
         })
-    }).then(function (result) {
-        let {Code}=result
+    }).then(function (res) {
+        let {Code}=res
         if (Code === 'OK') {
             //处理返回参数
-            res.json({
-                "code":"200",
-                "msg":"Message already sent"
-            })
             console.log(res)
-        }
-        else{
-            res.json({
-                "code":"201",
-                "msg":"Something wrong while sending message"
-            })
         }
     }, function (err) {
         console.log(err)
     })
 }
 
-function forgetPassword(phoneNumber,verifyCode,res){
+function forgetPassword(phoneNumber,verifyCode){
     smsClient.sendSMS({
         PhoneNumbers: phoneNumber,
         SignName: '小世界',
@@ -48,21 +38,11 @@ function forgetPassword(phoneNumber,verifyCode,res){
         TemplateParam: JSON.stringify({
             "code":verifyCode
         })
-    }).then(function (result) {
-        let {Code}=result
+    }).then(function (res) {
+        let {Code}=res
         if (Code === 'OK') {
             //处理返回参数
-            res.json({
-                "code":"200",
-                "msg":"Message already sent"
-            })
             console.log(res)
-        }
-        else{
-            res.json({
-                "code":"201",
-                "msg":"Something wrong while sending message"
-            })
         }
     }, function (err) {
         console.log(err)
