@@ -120,7 +120,6 @@ var md5 = crypto.createHash("md5")
                         var param = [];
                         param.push(params.account);
                         param.push(params.name);
-                        param.push(params.gender);
                         param.push(new Date());
                         var password = params.password;
                         db.queryArgs(sqlCommands.users.phone_register,param,
@@ -135,7 +134,7 @@ var md5 = crypto.createHash("md5")
                                     db.queryArgs(sqlCommands.users.create_authentication,authentication,
                                         function(err,result){
                                             if(result){
-                                                db.doReturn(res,200,'Registered Successfully');
+                                                db.doReturn(res,200,'Registered Successfully',insertId);
                                             }
                                             else{
                                                 db.doReturn(res,201,'Register Failure',err.sqlMessage);
@@ -169,6 +168,7 @@ function modify_password(req,res,next){
     else{
         var params = req.body
         var oldPassword = req.body.oldpassword
+        oldPassword = oldPassword.toString()
 	var user_id = req.body.id
         var encryptedOldPassword = md5.update(oldPassword).digest("hex")
         db.queryArgs(sqlCommands.users.check_authentication, user_id, 
@@ -178,7 +178,8 @@ function modify_password(req,res,next){
                                     var insertId = req.body.id;
                                     var authentication = [];
                                     var newPassword = req.body.newpassword
-                                    var encryptedNewPassword = _md5.update(newPassword).digest("hex");
+                                    newPassword = newPassword.toString()
+				    var encryptedNewPassword = _md5.update(newPassword).digest("hex");
                                     authentication.push(encryptedNewPassword);
                                     authentication.push(insertId);
                                     db.queryArgs(sqlCommands.users.updatePassword,authentication,

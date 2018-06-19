@@ -25,23 +25,21 @@ var method = req.body.method;
         });
 	}
 })
+//注册的验证码
 router.post('/registerVerifycode',function(req,res,next){
-        var phoneNumber = req.body.account
-	console.log(phoneNumber)
-	Verify.sendMessage(phoneNumber)
+        Verify.register(req,res,next)
 })
-
+//重置密码
 router.post('/resetPassword',function(req,res,next){
     Users.reset_password(req,res,next)
 })
-
+//修改密码
 router.post('/modifyPassword',function(req,res,next){
 	Users.modify_password(req,res,next)
 })
-
+//重置密码的验证码
 router.post('/resetVerifycode',function(req,res,next){
-		var phoneNumber = req.body.account
-		Verify.forgetPassword(phoneNumber)
+		Verify.reset(req,res,next)
 })
 
 router.post('/register',function(req,res,next){

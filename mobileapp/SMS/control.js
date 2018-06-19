@@ -11,24 +11,29 @@ function generateCode(){
 }
 
 
+function register(req,res,next){
+	var number = req.body.account
+	var verifyCode = generateCode()
+    client.set(phoneNumber,verifyCode,function(err,reply){
+	client.expire(phoneNumber,600)
+	console.log(reply.toString());
+	messageFunc.messageVerify(phoneNumber,verifyCode,res)
+    })
+}
 
-function sendMessage(phoneNumber){
-    var verifyCode = generateCode()
+
+
+function reset(req,res,next){
+	var number = req.body.account
+	    var verifyCode = generateCode()
     client.set(phoneNumber,verifyCode,function(err,reply){
 	client.expire(phoneNumber,600)
 	console.log(reply.toString());
     })
-    messageFunc.messageVerify(phoneNumber,verifyCode)
+    messageFunc.forgetPassword(phoneNumber,verifyCode,res)
 }
 
-function forgetPassword(phoneNumber){
-    var verifyCode = generateCode()
-    client.set(phoneNumber,verifyCode,function(err,reply){
-	client.expire(phoneNumber,600)
-	console.log(reply.toString());
-    })
-    messageFunc.forgetPassword(phoneNumber,verifyCode)
-}
+
 
 function checkVerifycode(phoneNumber,code){
 	client.get(phoneNumber,function(err,response){
@@ -49,11 +54,11 @@ function checkVerifycode(phoneNumber,code){
 }
 
 
-checkVerifycode(15082362189,2130)
-
 module.exports={
 	sendMessage:sendMessage,
 	checkVerifycode:checkVerifycode,
-	forgetPassword:forgetPassword
+	forgetPassword:forgetPassword,
+	reset:reset,
+	register:register
 }
 //sendMessage(15082362189,code)
