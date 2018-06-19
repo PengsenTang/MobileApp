@@ -8,7 +8,7 @@ var userinfo = {
 };
 
 var users = {
-	phone_register:'insert into user_info(phone_number,name,gender,register_time) values(?,?,?,?)',
+	phone_register:'insert into user_info(phone_number,name,register_time) values(?,?,?)',
 	create_authentication:'insert into authentication values(?,?)',
 	email_register:'insert into user_info(mail_address,name,gender,register_time) values(?,?,?,?)',
 	getIdByNumber:'select * from user_info where phone_number = ?',
@@ -24,7 +24,10 @@ pengsen tang
 
 //write here
 var relationship = {
-	get_relationship:'select * from relation where id1 = ? or id2 = ?',
+	get_relationship:'select m.id2 as id,m.description,m.time,u.name,u.nickname,u.phone_number,u.profile_photo from relation as m,user_info as u where m.id2 = u.id and m.id1 = ? UNION select m.id1 as id,m.description,m.time,u.name,u.nickname,u.phone_number,u.profile_photo from relation as m,user_info as u where m.id2 = u.id and m.id2 = ?',
+	filterByNumber:'select m.id2 as id,m.description,m.time,u.name,u.nickname,u.phone_number,u.profile_photo from relation as m,user_info as u where m.id2 = u.id and m.id1 = ? and u.phone_number like ? UNION select m.id1 as id,m.description,m.time,u.name,u.phone_number,u.nickname,u.profile_photo from relation as m,user_info as u where m.id2 = u.id and m.id2 = ? and u.phone_number like ?',
+	filterByName:'select m.id2 as id,m.description,m.time,u.name,u.nickname,u.phone_number,u.profile_photo from relation as m,user_info as u where m.id2 = u.id and m.id1 = ? and u.name like ? UNION select m.id1 as id,m.description,m.time,u.name,u.phone_number,u.nickname,u.profile_photo from relation as m,user_info as u where m.id2 = u.id and m.id2 = ? and u.name like ?',
+	filterByNickname:'select m.id2 as id,m.description,m.time,u.name,u.nickname,u.phone_number,u.profile_photo from relation as m,user_info as u where m.id2 = u.id and m.id1 = ? and u.nickname like ? UNION select m.id1 as id,m.description,m.time,u.name,u.phone_number,u.nickname,u.profile_photo from relation as m,user_info as u where m.id2 = u.id and m.id2 = ? and u.nickname like ?',
 	new_relationship:'insert into relation values(?,?,?,?)',
 	check_relationship:'select count(*) from relation where (id1 = ? and id2 = ?)  or (id1 = ? and id2 = ?) '
 }
@@ -39,7 +42,8 @@ yuhang meng
 //write here
 var message = {
 	send: 'insert into message(sender, receiver, content, time) values(?,?,?,now())',
-	receive_list: 'select * from message where receiver=?',
+	//receive_list: 'select * from message where receiver=?',
+	receive_list: 'select m.id,m.sender,m.content,m.invitation_status,m.message_status,m.time,u.nickname,u.profile_photo from message as m,user_info as u where m.sender = u.id and m.receiver = ?',
 	message_info: 'select * from message where id=?',
 	update_message_status: 'update message set message_status=? where id=?'
 }

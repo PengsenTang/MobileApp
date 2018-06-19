@@ -1,6 +1,92 @@
 var db = require('../DAO/Connection');
 var sqlCommands = require('../DAO/commonSQL');
 
+
+
+function filterByName(req,res){
+    if(!req.body.id||!req.body.value){
+        res.json({
+            'code': 201,
+            'msg': 'parameter error'
+        });
+        return;
+    }
+    var params = req.body;
+    var param = [];
+    param.push(params.id);
+    value=req.body.value
+    rvalue = "%"+value+"%"
+    console.log(rvalue)
+    param.push(rvalue)
+    param.push(params.id);
+    param.push(rvalue)
+     db.queryArgs(sqlCommands.relationship.filterByName, param, function(err, result) {
+                if(result){
+                    db.doReturn(res,200,'all corresponding records',result);
+                }
+                else{
+                    db.doReturn(res,201,'Something Wrong with Record',err.sqlMessage);
+                }
+                return result;
+            });
+}
+
+function filterByNickname(req,res){
+    if(!req.body.id||!req.body.value){
+        res.json({
+            'code': 201,
+            'msg': 'parameter error'
+        });
+        return;
+    }
+    var params = req.body;
+    var param = [];
+    param.push(params.id);
+    value=req.body.value
+    rvalue = "%"+value+"%"
+    console.log(rvalue)
+    param.push(rvalue)
+    param.push(params.id);
+    param.push(rvalue)
+     db.queryArgs(sqlCommands.relationship.filterByNickname, param, function(err, result) {
+                if(result){
+                    db.doReturn(res,200,'all corresponding records',result);
+                }
+                else{
+                    db.doReturn(res,201,'Something Wrong with Record',err.sqlMessage);
+                }
+                return result;
+            });
+}
+
+function filterByNumber(req,res){
+    if(!req.body.id||!req.body.value){
+        res.json({
+            'code': 201,
+            'msg': 'parameter error'
+        });
+        return;
+    }
+    var params = req.body;
+    var param = [];
+    param.push(params.id);
+    value=req.body.value
+    rvalue = "%"+value+"%"
+    console.log(rvalue)
+    param.push(rvalue)
+    param.push(params.id);
+    param.push(rvalue)
+     db.queryArgs(sqlCommands.relationship.filterByNumber, param, function(err, result) {
+                if(result){
+                    db.doReturn(res,200,'all corresponding records',result);
+                }
+                else{
+                    db.doReturn(res,201,'Something Wrong with Record',err.sqlMessage);
+                }
+                return result;
+            });
+}
+
 function getRelationship(req,res){
     if(!req.body.id){
         res.json({
@@ -14,7 +100,7 @@ function getRelationship(req,res){
     var param = [];
     param.push(params.id);
     param.push(params.id);
-     db.queryArgs(sqlCommands.relationship.get_relationship, param, function(err, result) {
+    db.queryArgs(sqlCommands.relationship.get_relationship, param, function(err, result) {
                 if(result){
                     db.doReturn(res,200,'all corresponding records',result);
                 }
@@ -82,7 +168,10 @@ function checkRelationship(req,res){
 
 
 module.exports = {
-	getRelationship:getRelationship,
+    getRelationship:getRelationship,
+    filterByNumber:filterByNumber,
+    filterByName:filterByName,
+    filterByNickname:filterByNickname,
     newRelationship:newRelationship,
     checkRelationship:checkRelationship
 };
