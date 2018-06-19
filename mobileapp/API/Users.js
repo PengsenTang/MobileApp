@@ -120,7 +120,6 @@ var md5 = crypto.createHash("md5")
                         var param = [];
                         param.push(params.account);
                         param.push(params.name);
-                        param.push(params.gender);
                         param.push(new Date());
                         var password = params.password;
                         db.queryArgs(sqlCommands.users.phone_register,param,
@@ -135,7 +134,7 @@ var md5 = crypto.createHash("md5")
                                     db.queryArgs(sqlCommands.users.create_authentication,authentication,
                                         function(err,result){
                                             if(result){
-                                                db.doReturn(res,200,'Registered Successfully');
+                                                db.doReturn(res,200,'Registered Successfully',insertId);
                                             }
                                             else{
                                                 db.doReturn(res,201,'Register Failure',err.sqlMessage);

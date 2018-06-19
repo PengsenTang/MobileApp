@@ -26,9 +26,7 @@ var method = req.body.method;
 	}
 })
 router.post('/registerVerifycode',function(req,res,next){
-        var phoneNumber = req.body.account
-	console.log(phoneNumber)
-	Verify.sendMessage(phoneNumber)
+        Verify.reset(req,res,next)
 })
 
 router.post('/resetPassword',function(req,res,next){
@@ -40,8 +38,7 @@ router.post('/modifyPassword',function(req,res,next){
 })
 
 router.post('/resetVerifycode',function(req,res,next){
-		var phoneNumber = req.body.account
-		Verify.forgetPassword(phoneNumber)
+		Verify.register(req,res,next)
 })
 
 router.post('/register',function(req,res,next){

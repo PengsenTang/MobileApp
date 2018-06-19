@@ -11,6 +11,15 @@ function generateCode(){
 }
 
 
+function register(req,res,next){
+	var number = req.body.account
+	sendMessage(phoneNumber)
+}
+
+function reset(req,res,next){
+	var number = req.body.account
+	forgetPassword(number)
+}
 
 function sendMessage(phoneNumber){
     var verifyCode = generateCode()
