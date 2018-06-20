@@ -55,10 +55,7 @@ function checkVerifycode(phoneNumber,code){
 
 
 module.exports={
-	sendMessage:sendMessage,
 	checkVerifycode:checkVerifycode,
-	forgetPassword:forgetPassword,
 	reset:reset,
 	register:register
 }
-//sendMessage(15082362189,code)

@@ -48,6 +48,7 @@ function get_userinfo(req, res, next){
 function update_userinfo(req, res, next){
     var params = req.body;
     //if not find id or attributes, return error
+    console.log(params)
     if(!params.id || !params.Attributes){
         res.json({
             code:'201',
@@ -55,8 +56,11 @@ function update_userinfo(req, res, next){
         });
     }
     else{
-        var attributes = myJson.getUpdateList(params.Attributes);//string to object
+        console.log("in else")
+	var attributes = myJson.getUpdateList(params.Attributes);//string to object
+	console.log(attributes)
         attributes.push(params.id);
+	console.log(attributes)
         db.queryArgs(sqlCommands.userinfo.update_info, attributes, 
             function(err, result) {
                 if(result){

@@ -179,7 +179,11 @@ function modify_password(req,res,next){
                                     var authentication = [];
                                     var newPassword = req.body.newpassword
                                     newPassword = newPassword.toString()
+<<<<<<< HEAD
                                     var encryptedNewPassword = _md5.update(newPassword).digest("hex");
+=======
+				    var encryptedNewPassword = _md5.update(newPassword).digest("hex");
+>>>>>>> 6b2577c22c40fcee4ffe84c26f38f7b24fb2cf95
                                     authentication.push(encryptedNewPassword);
                                     authentication.push(insertId);
                                     db.queryArgs(sqlCommands.users.updatePassword,authentication,

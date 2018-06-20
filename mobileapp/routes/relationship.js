@@ -16,11 +16,11 @@ router.post('/new', function(req, res, next) {
 
 router.post('/filter', function(req, res, next) {
   console.log(req.body.method)
-  if(req.body.method == 1)
+  if(req.body.method == 0)
     Relationship.filterByName(req,res)
-  else if(req.body.method == 2)
+  else if(req.body.method == 1)
     Relationship.filterByNickname(req,res)
-  else if(req.body.method == 3)
+  else if(req.body.method == 2)
     Relationship.filterByNumber(req,res)
   else
    res.json({
