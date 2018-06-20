@@ -15,7 +15,6 @@ router.post('/new', function(req, res, next) {
 });
 
 router.post('/filter', function(req, res, next) {
-  console.log(req.body.method)
   if(req.body.method == 0)
     Relationship.filterByName(req,res)
   else if(req.body.method == 1)
