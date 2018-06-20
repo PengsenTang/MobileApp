@@ -22,8 +22,8 @@ function register(req,res,next){
 }
 
 function sendInvitation(req,res,next){
-	var phoneNumber = req.body.phoneNumber
-	var nickname = req.body.nickname
+	var phoneNumber = req.body.targetNumber
+	var nickname = req.body.inviterName
 	messageFunc.sendInvitation(phoneNumber,nickname,res)
 }
 
@@ -62,6 +62,6 @@ function checkVerifycode(phoneNumber,code){
 module.exports={
 	checkVerifycode:checkVerifycode,
 	reset:reset,
-	register:register
+	register:register,
+	sendInvitation:sendInvitation
 }
->>>>>>> c31589debe978754119f9b7c1972b22bc4522b49

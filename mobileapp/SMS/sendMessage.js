@@ -26,7 +26,6 @@ function sendInvitation(phoneNumber,nickname,res){
                 "code":"200",
                 "msg":"Message already sent"
             })
-            console.log(res)
         }
         else{
             res.json({
