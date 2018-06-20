@@ -12,7 +12,7 @@ function generateCode(){
 
 
 function register(req,res,next){
-	var phoneNumber = req.body.account
+	var number = req.body.account
 	var verifyCode = generateCode()
     client.set(phoneNumber,verifyCode,function(err,reply){
 	client.expire(phoneNumber,600)
@@ -21,10 +21,15 @@ function register(req,res,next){
     })
 }
 
+function sendInvitation(req,res,next){
+	var phoneNumber = req.body.phoneNumber
+	var nickname = req.body.nickname
+	messageFunc.sendInvitation(phoneNumber,nickname,res)
+}
 
 
 function reset(req,res,next){
-	var phoneNumber = req.body.account
+	var number = req.body.account
 	    var verifyCode = generateCode()
     client.set(phoneNumber,verifyCode,function(err,reply){
 	client.expire(phoneNumber,600)
@@ -59,4 +64,4 @@ module.exports={
 	reset:reset,
 	register:register
 }
-//sendMessage(15082362189,code)
+>>>>>>> c31589debe978754119f9b7c1972b22bc4522b49
