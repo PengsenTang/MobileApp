@@ -21,6 +21,11 @@ function register(req,res,next){
     })
 }
 
+function sendInvitation(req,res,next){
+	var phoneNumber = req.body.phoneNumber
+	var nickname = req.body.nickname
+	messageFunc.sendInvitation(phoneNumber,nickname,res)
+}
 
 
 function reset(req,res,next){
