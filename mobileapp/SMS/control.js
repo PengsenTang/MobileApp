@@ -21,6 +21,11 @@ function register(req,res,next){
     })
 }
 
+function sendInvitation(req,res,next){
+	var phoneNumber = req.body.targetNumber
+	var nickname = req.body.inviterName
+	messageFunc.sendInvitation(phoneNumber,nickname,res)
+}
 
 
 function reset(req,res,next){
@@ -55,10 +60,8 @@ function checkVerifycode(phoneNumber,code){
 
 
 module.exports={
-	sendMessage:sendMessage,
 	checkVerifycode:checkVerifycode,
-	forgetPassword:forgetPassword,
 	reset:reset,
-	register:register
+	register:register,
+	sendInvitation:sendInvitation
 }
-//sendMessage(15082362189,code)

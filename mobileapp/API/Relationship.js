@@ -16,7 +16,6 @@ function filterByName(req,res){
     param.push(params.id);
     value=req.body.value
     rvalue = "%"+value+"%"
-    console.log(rvalue)
     param.push(rvalue)
     param.push(params.id);
     param.push(rvalue)
@@ -44,7 +43,6 @@ function filterByNickname(req,res){
     param.push(params.id);
     value=req.body.value
     rvalue = "%"+value+"%"
-    console.log(rvalue)
     param.push(rvalue)
     param.push(params.id);
     param.push(rvalue)
@@ -55,7 +53,6 @@ function filterByNickname(req,res){
                 else{
                     db.doReturn(res,201,'Something Wrong with Record',err.sqlMessage);
                 }
-                return result;
             });
 }
 
@@ -72,7 +69,6 @@ function filterByNumber(req,res){
     param.push(params.id);
     value=req.body.value
     rvalue = "%"+value+"%"
-    console.log(rvalue)
     param.push(rvalue)
     param.push(params.id);
     param.push(rvalue)
@@ -96,7 +92,6 @@ function getRelationship(req,res){
         return;
     }
     var params = req.body;
-    console.log(params);
     var param = [];
     param.push(params.id);
     param.push(params.id);

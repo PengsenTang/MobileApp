@@ -10,6 +10,34 @@ const secretAccessKey = 'dQmpcStlhRk8PUgZQHqNQr2WSWwlVr'
 let smsClient = new SMSClient({accessKeyId, secretAccessKey})
 //发送短信
 
+function sendInvitation(phoneNumber,nickname,res){
+    smsClient.sendSMS({
+        PhoneNumbers: phoneNumber,
+        SignName: '小世界',
+        TemplateCode: 'SMS_137666667',
+        TemplateParam: JSON.stringify({
+            "nickname":nickname
+        })
+    }).then(function (result) {
+        let {Code}=result
+        if (Code === 'OK') {
+            //处理返回参数
+            res.json({
+                "code":"200",
+                "msg":"Message already sent"
+            })
+        }
+        else{
+            res.json({
+                "code":"201",
+                "msg":"Something wrong while sending message"
+            })
+        }
+    }, function (err) {
+        console.log(err)
+    })
+}
+
 
 function messageVerify(phoneNumber,verifyCode,res){
     smsClient.sendSMS({
@@ -73,5 +101,6 @@ function forgetPassword(phoneNumber,verifyCode,res){
 // messageVerify('15082362189',"666999")
 module.exports={
     messageVerify:messageVerify,
-    forgetPassword:forgetPassword
+    forgetPassword:forgetPassword,
+    sendInvitation:sendInvitation
 }

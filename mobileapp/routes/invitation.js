@@ -14,7 +14,7 @@ router.post('/send', function(req, res, next) {
 
 router.post('/newInvitation',function(req,res,next){
 //	res.send("please use get method")
-	res.json({'msg':'To send message to invite'});
+	Invitation.sendInvitation(req,res)
 });
 
 router.post('/update_invitation_status', function(req, res, next) {

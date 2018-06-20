@@ -169,7 +169,7 @@ function modify_password(req,res,next){
         var params = req.body
         var oldPassword = req.body.oldpassword
         oldPassword = oldPassword.toString()
-	var user_id = req.body.id
+	    var user_id = req.body.id
         var encryptedOldPassword = md5.update(oldPassword).digest("hex")
         db.queryArgs(sqlCommands.users.check_authentication, user_id, 
             function(err,result){

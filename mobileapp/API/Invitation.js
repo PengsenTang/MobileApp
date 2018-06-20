@@ -2,7 +2,7 @@ var db = require('../DAO/Connection');
 var sqlCommands = require('../DAO/commonSQL');
 var Msg = require('./Message');
 var Relationship = require('./Relationship');
-
+var Verify = require('../SMS/control')
 
 function send(req, res){
 	if(!req.body.sender|| !req.body.receiver || !req.body.content){
@@ -29,7 +29,17 @@ function send(req, res){
     });
 }
 
-
+function sendInvitation(req,res){
+	if(!req.body.targetNumber || !req.body.inviterName){
+		res.json({
+			'code':200,
+			'msg':'Lack of phoneNumber or nickname'
+		})
+	}
+	Verify.sendInvitation(req,res)
+}
+	
+	
 function agree_invitation(id, res){
     Msg.get_message_info(res, id, function(req, res){
             console.log(req);
@@ -74,5 +84,6 @@ function update_invitation_status(req, res){
 
 module.exports = {
 	send: send,
-    update_invitation_status: update_invitation_status
+        update_invitation_status: update_invitation_status,
+	sendInvitation:sendInvitation
 };

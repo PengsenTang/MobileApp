@@ -15,10 +15,12 @@ function getAttributes(str){
 
 
 function getUpdateList(jsonStr){
-	var json = JSON.parse(jsonStr);
-	var result = [];
+	//var json = JSON.parse(jsonStr);
+	var json = jsonStr;
+  	var result = [];
     for(var key in json){
-    	result.push(key);
+    	key= key.toString()
+	result.push(key);
     	result.push(json[key]);
     }
     return result; 
@@ -26,9 +28,13 @@ function getUpdateList(jsonStr){
 
 
 function getUpdateString(jsonStr){
+	console.log("1st line in getUpdateString")
 	var json = JSON.parse(jsonStr);
 	var result = "";
+	console.log("json is")
+	console.log(json)
     for(var key in json){
+	key = key.toString()
     	result += key + "='" + json[key] + "',";
     }
     return result.substring(0, result.length-1);

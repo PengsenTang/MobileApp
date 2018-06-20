@@ -27,9 +27,7 @@ function queryArgs(sql, args, callback) {
         }
         else{
             var query=connection.query(sql, args,function (err, rows) {
-                console.log(query.sql);
                 callback(err, rows);
-                console.log(rows);
                 connection.release();
             });
             
