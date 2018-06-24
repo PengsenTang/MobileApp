@@ -114,6 +114,7 @@ function newRelationship(req,res){
         return;
     }
     var params = req.body;
+    console.log(params)
     var param = [];
     param.push(params.id1);
     param.push(params.id2);
@@ -125,8 +126,9 @@ function newRelationship(req,res){
         param.push(new Date());
         db.queryArgs(sqlCommands.relationship.new_relationship, param, function(err, result) {
                 if(result){
-                    db.doReturn(res,200,'New Relation Established');
-                }
+                    //db.doReturn(res,200,'New Relation Established');
+	        return 0       
+		 }
                 else{
                     db.doReturn(res,201,'Something Wrong with Record',err.sqlMessage);
                 }
