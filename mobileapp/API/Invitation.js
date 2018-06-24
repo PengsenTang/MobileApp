@@ -36,14 +36,24 @@ function sendInvitation(req,res){
 			'msg':'Lack of phoneNumber or nickname'
 		})
 	}
-	Verify.sendInvitation(req,res)
+	var params = ['nickname',req.body.inviterName]
+	console.log(req.body.targetNumber)
+console.log(req.body.inviterName)
+        db.queryArgs(sqlCommands.userinfo.get_info, params, function(err, result) {
+                var myNickname = result[0]['nickname']   
+		req.body.inviterName = myNickname	
+		Verify.sendInvitation(req,res)
+	}
+
+        );
 }
 	
 	
 function agree_invitation(id, res){
-    Msg.get_message_info(res, id, function(req, res){
+    	console.log('in agree_invi')
+	Msg.get_message_info(res, id, function(req, res){
             console.log(req);
-            var params = {'id1':req.sender, 'id2':req.receiver};
+            var params = {'id1':req.sender, 'id2':req.receiver,'description':'invitation accepted'};
             console.log('1111:'+params);
             Relationship.newRelationship({'body':params}, res);
         }
@@ -77,7 +87,7 @@ function update_invitation_status(req, res){
     	if(!result || result.affectedRows == 0)
     		db.doReturn(res, 201, 'update failed');
     	else
-    		db.doReturn(res, 200, 'success');
+    		db.doReturn(res, 200, 'success here');
     });
 }
 

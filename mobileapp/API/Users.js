@@ -6,6 +6,9 @@ const crypto = require('crypto')
 
 client = redis.createClient()
 
+var profile_photo_path = ['/profile_photo/avatar1.jpg','/profile_photo/avatar2.jpg','/profile_photo/avatar3.jpg','/profile_photo/avatar4.jpg','/profile_photo/avatar5.jpg','/profile_photo/avatar6.jpg','/profile_photo/avatar7.jpg','/profile_photo/avatar8.jpg','/profile_photo/avatar9.jpg','/profile_photo/avatar10.jpg']
+
+
 function email_authentication(req, res, next){
     if( !req.body.account  || !req.body.password){
         res.json({
@@ -121,7 +124,10 @@ var md5 = crypto.createHash("md5")
                         param.push(params.account);
                         param.push(params.name);
                         param.push(new Date());
-                        var password = params.password;
+			var index = Math.floor(Math.random()*10)
+			var avatar_path = profile_photo_path[index]
+                        param.push(avatar_path)
+			var password = params.password;
                         db.queryArgs(sqlCommands.users.phone_register,param,
                             function(err,result){
                                 if(result){
@@ -227,6 +233,7 @@ function reset_password(req,res,next){
         }
         else{
             if(code == response){
+			console.log('!!!')
                         var params = req.body;
                         var param = [];
                         var account = params.account
@@ -240,13 +247,14 @@ function reset_password(req,res,next){
                                     authentication.push(encryptedPassword);
                                     authentication.push(insertId);
                                     console.log(authentication)
-				    authentication2 = ['153','53']
 				    console.log(sqlCommands.users.updatePassword)
 				    db.queryArgs(sqlCommands.users.updatePassword,authentication,function(err,result){
                                             if(result){
-                                                db.doReturn(res,200,'Updated Successfully');
+					console.log('updated successfullt')                 
+                               db.doReturn(res,200,'Updated Successfully',insertId);
                                             }
                                             else{
+						console.log('failure')
                                                 db.doReturn(res,201,'Update Failure',err.sqlMessage);
                                             }
                                         });

@@ -12,7 +12,7 @@ function generateCode(){
 
 
 function register(req,res,next){
-	var number = req.body.account
+	var phoneNumber = req.body.account
 	var verifyCode = generateCode()
     client.set(phoneNumber,verifyCode,function(err,reply){
 	client.expire(phoneNumber,600)
@@ -29,7 +29,7 @@ function sendInvitation(req,res,next){
 
 
 function reset(req,res,next){
-	var number = req.body.account
+	var phoneNumber = req.body.account
 	    var verifyCode = generateCode()
     client.set(phoneNumber,verifyCode,function(err,reply){
 	client.expire(phoneNumber,600)
